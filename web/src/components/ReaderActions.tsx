@@ -1,0 +1,42 @@
+import { Bookmark, LoaderCircle, Sparkles } from "lucide-react";
+
+export function ReaderActions(props: {
+  primaryLabel: string;
+  pageLabel: string;
+  onPrimary: () => void;
+  onPage: () => void;
+  onFinish: () => void;
+  primaryDisabled?: boolean;
+}) {
+  return (
+    <nav className="reader-actions" aria-label="共读操作">
+      <button
+        type="button"
+        className="action-primary reader-primary-action"
+        onClick={props.onPrimary}
+        disabled={props.primaryDisabled}
+        aria-busy={props.primaryDisabled || undefined}
+      >
+        {props.primaryDisabled ? (
+          <LoaderCircle className="reader-action-icon reader-action-spinner" aria-hidden="true" strokeWidth={1.8} />
+        ) : (
+          <Sparkles className="reader-action-icon" aria-hidden="true" strokeWidth={1.8} />
+        )}
+        <span>{props.primaryDisabled ? "正在共读…" : props.primaryLabel}</span>
+      </button>
+      <button
+        type="button"
+        className="reader-page-status"
+        aria-label={`阅读进度 ${props.pageLabel}，打开目录与跳页`}
+        onClick={props.onPage}
+      >
+        <span>页码</span>
+        <strong>{props.pageLabel}</strong>
+      </button>
+      <button type="button" className="reader-finish-action" onClick={props.onFinish}>
+        <Bookmark className="reader-action-icon" aria-hidden="true" strokeWidth={1.8} />
+        <span>留在此页</span>
+      </button>
+    </nav>
+  );
+}
